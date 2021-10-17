@@ -1,0 +1,87 @@
+{
+  "name": "daily-novena",
+  "displayName": "Daily Novena",
+  "description": "Read more Novenas",
+  "version": "0.0.1",
+  "author": {
+    "name": "Joey Hage",
+    "url": "https://github.com/joeyhage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joeyhage/daily-novena"
+  },
+  "bugs": {
+    "url": "https://github.com/joeyhage/daily-novena/issues"
+  },
+  "homepage": "https://github.com/joeyhage/daily-novena",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "extensionKind": [
+    "workspace"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "novena",
+    "pray",
+    "christianity"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:dailynovena.pray",
+    "onCommand:dailynovena.chooseNovena",
+    "onCommand:dailynovena.chooseNovenaDay"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "commands": [
+      {
+        "command": "dailynovena.pray",
+        "category": "Novena",
+        "title": "Pray Current Novena"
+      },
+      {
+        "command": "dailynovena.chooseNovena",
+        "category": "Novena",
+        "title": "Choose Novena to pray"
+      },
+      {
+        "command": "dailynovena.chooseNovenaDay",
+        "category": "Novena",
+        "title": "Choose Novena Day"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.4",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "14.x",
+    "@types/node-fetch": "^2.0.0",
+    "@types/vscode": "^1.60.0",
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/parser": "^4.31.1",
+    "@vscode/test-electron": "^1.6.2",
+    "eslint": "^7.32.0",
+    "glob": "^7.1.7",
+    "mocha": "^9.1.1",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "htmlparser2": "^7.1.2",
+    "node-fetch": "^2.0.0"
+  }
+}
