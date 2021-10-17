@@ -7,6 +7,7 @@
     "name": "Joey Hage",
     "url": "https://github.com/joeyhage"
   },
+  "publisher": "joeyhage",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/joeyhage/daily-novena",
   "engines": {
+    "node": "^14.0.0",
     "vscode": "^1.60.0"
   },
   "extensionKind": [
@@ -70,7 +72,7 @@
   "devDependencies": {
     "@types/glob": "^7.1.4",
     "@types/mocha": "^9.0.0",
-    "@types/node": "16.x",
+    "@types/node": "^14.0.0",
     "@types/node-fetch": "^2.0.0",
     "@types/vscode": "^1.60.0",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
