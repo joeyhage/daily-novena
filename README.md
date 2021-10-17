@@ -1,70 +1,35 @@
 # daily-novena README
 
+<p align="center">
+  <a href="https://github.com/joeyhage/daily-novena/actions?query=workflow%3Aci">
+    <img alt="Build Status" src="https://github.com/joeyhage/daily-novena/workflows/ci/badge.svg?branch=main"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=joeyhage.daily-novena">
+    <img alt="VS Code Marketplace Downloads" src="https://img.shields.io/visual-studio-marketplace/d/joeyhage.daily-novena"></a>
+</p>
+
 Pray Novenas from [PrayMoreNovenas.com](https://www.praymorenovenas.com). Not affiliated in any way with PrayMoreNovenas.com.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+TODO
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+<!--\!\[feature X\]\(images/feature-x.png\)-->
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+None
 
-For example:
+In the future, this extension may contribute the following settings:
 
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* `daily-novena.enable`: enable/disable this extension
+* `daily-novena.on-startup`: enable/disable showing the current Novena prayer on startup
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+None
+
+[Report a bug](https://github.com/joeyhage/daily-novena/issues/new?assignees=&labels=&template=bug_report.md)
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+TODO
