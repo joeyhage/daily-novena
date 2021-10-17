@@ -5,4 +5,5 @@ node_modules/
 .vscode-test/
 
 *.vsix
+.npmrc
 dailynovena.config.json
