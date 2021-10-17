@@ -1,5 +1,7 @@
 # daily-novena README
 
+Pray Novenas from [PrayMoreNovenas.com](https://www.praymorenovenas.com). Not affiliated in any way with PrayMoreNovenas.com.
+
 ## Features
 
 Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
