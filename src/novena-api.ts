@@ -5,13 +5,13 @@ import { COMMUNITY_NOVENA } from "./constants";
 import { ExtensionConfig, Novena, PostSection } from "./types";
 
 export async function getLatestNovenaMetadata(): Promise<Novena> {
-  const metadata = new Novena();
+  const novena = new Novena();
   let postSection: PostSection | undefined;
   let isMetadataAnchorTag = false;
 
   const parserStream = new WritableStream({
     onopentag(tagname: string, attributes: { class?: string; href?: string }) {
-      if (metadata.isComplete()) {
+      if (novena.isComplete()) {
         return;
       }
       const classNames = attributes.class?.split(" ") || [];
@@ -24,23 +24,23 @@ export async function getLatestNovenaMetadata(): Promise<Novena> {
       } else if (!!postSection && tagname === "a") {
         isMetadataAnchorTag = true;
         if (postSection.isHeader) {
-          metadata.podcastLink = attributes.href;
+          novena.podcastLink = attributes.href;
         } else if (postSection.isContent) {
-          metadata.novenaLink = attributes.href;
+          novena.novenaLink = attributes.href;
         }
       }
     },
     ontext(text: string) {
       if (isMetadataAnchorTag && postSection?.isHeader) {
-        metadata.title += text.replace(/\n/, "");
+        novena.title += text.replace(/\n/, "");
       }
     },
     onclosetag(tagname: string) {
       if (isMetadataAnchorTag && tagname === "a") {
         postSection = undefined;
         isMetadataAnchorTag = false;
-        metadata.day =
-          <Novena["day"]>metadata.title?.match(/[Dd]ay (\d)/)?.[1] || undefined;
+        novena.day =
+          <Novena["day"]>novena.title?.match(/[Dd]ay (\d)/)?.[1] || undefined;
       }
     },
   });
@@ -51,7 +51,7 @@ export async function getLatestNovenaMetadata(): Promise<Novena> {
     } else {
       res?.body
         ?.pipe(parserStream)
-        .on("finish", () => resolve(metadata))
+        .on("finish", () => resolve(novena))
         .on("error", reject);
     }
   });
@@ -74,7 +74,7 @@ export async function getNovenaText(
         currentDayItem++;
       }
       if (isDayItem && tagname === "p") {
-        novenaText += "<p>"
+        novenaText += "<p>";
       }
     },
     ontext(text: string) {
@@ -86,7 +86,7 @@ export async function getNovenaText(
       if (isDayItem && tagname === "div") {
         isDayItem = false;
       } else if (isDayItem && tagname === "p") {
-        novenaText += "</p>"
+        novenaText += "</p>";
       }
     },
   });
