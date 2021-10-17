@@ -83,6 +83,6 @@
   },
   "dependencies": {
     "htmlparser2": "^7.1.2",
-    "node-fetch": "^2.0.0"
+    "node-fetch": "^3.0.0"
   }
 }
