@@ -1,23 +1,25 @@
+import * as td from "testdouble";
+td.replace("../util", {
+  log: console.log,
+});
 import { expect } from "chai";
 import { getLatestNovenaMetadata, getNovenaList } from "../novena-api";
-import { Novena } from "../types";
 
 const NOVENA_LINK_REGEX = "https://www\\.praymorenovenas\\.com/[a-zA-Z\\d-]+";
+
+afterEach(() => {
+  td.reset();
+});
 
 it("should obtain Novena metadata for most recent Novena", async () => {
   // WHEN
   const novena = await getLatestNovenaMetadata();
 
   // THEN
-  expect(novena).to.satisfy((actual: Novena) => {
-    return (
-      (/^[Dd]ay \d/.test(actual.title) &&
-        novena.day! >= 0 &&
-        novena.day! <= 9) ||
-      (/^Final Prayer/.test(actual.title) && typeof novena.day === "undefined")
-    );
-  });
+  expect(novena.title).to.match(/^[a-zA-Záí.,'"’&| -]+$/);
+  expect(novena.day).to.be.within(1, 9);
   expect(novena.novenaLink).to.match(new RegExp(`^${NOVENA_LINK_REGEX}$`));
+  expect(novena.podcastLink).to.not.be.empty;
 });
 
 it("should build approximately 250 Novenas for `QuickPick` when Novena list is retrieved", async () => {
