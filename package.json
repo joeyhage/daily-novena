@@ -90,7 +90,6 @@
   },
   "dependencies": {
     "htmlparser2": "^7.1.2",
-    "node-fetch": "^2.0.0",
-    "rm": "^0.1.8"
+    "node-fetch": "^2.0.0"
   }
 }
