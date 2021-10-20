@@ -23,7 +23,7 @@ export async function updateConfig(
 ): Promise<void> {
   const oldConfig = await getConfig();
   return handleFile<void>(async (file) => {
-    log({ oldConfig, config });
+    log({ oldConfig, newConfig: config });
     await file.writeFile(
       JSON.stringify({ ...oldConfig, ...config }, undefined, 2)
     );
@@ -49,7 +49,6 @@ async function handleFile<T>(
     log({ message: "config file error", e });
   } finally {
     await file?.close();
-    log("Config file closed successfully");
   }
   return undefined;
 }

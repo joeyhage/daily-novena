@@ -50,30 +50,33 @@ const prayCommand = vscode.commands.registerCommand(
 const chooseNovenaCommand = vscode.commands.registerCommand(
   `${COMMAND_PREFIX}.chooseNovena`,
   async () => {
-    const chosen = await vscode.window.showQuickPick(getNovenaList(), {
-      canPickMany: false,
-      ignoreFocusOut: false,
-    });
-    log({ chosen });
-    if (chosen?.label === COMMUNITY_NOVENA) {
-      const novena = await getLatestNovenaMetadata();
-      await updateConfig({
-        prayCommunityNovena: true,
-        novenaName: novena.title,
-        novenaLink: novena.novenaLink,
-        novenaDay: novena.day,
-        lastChecked: new Date(),
-        lastPrayed: undefined,
+    try {
+      const chosen = await vscode.window.showQuickPick(getNovenaList(), {
+        canPickMany: false,
+        ignoreFocusOut: false,
       });
-    } else if (chosen) {
-      await updateConfig({
-        prayCommunityNovena: false,
-        novenaName: chosen?.label,
-        novenaLink: chosen?.detail,
-        novenaDay: 1,
-        lastChecked: new Date(),
-        lastPrayed: undefined,
-      });
+      if (chosen?.label === COMMUNITY_NOVENA) {
+        const novena = await getLatestNovenaMetadata();
+        await updateConfig({
+          prayCommunityNovena: true,
+          novenaName: novena.title,
+          novenaLink: novena.novenaLink,
+          novenaDay: novena.day,
+          lastChecked: new Date(),
+          lastPrayed: undefined,
+        });
+      } else if (chosen) {
+        await updateConfig({
+          prayCommunityNovena: false,
+          novenaName: chosen?.label,
+          novenaLink: chosen?.detail,
+          novenaDay: 1,
+          lastChecked: new Date(),
+          lastPrayed: undefined,
+        });
+      }
+    } catch (e) {
+      log({ e });
     }
   }
 );

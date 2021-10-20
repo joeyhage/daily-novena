@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 
-let outputChannel: vscode.OutputChannel;
+export let outputChannel: vscode.OutputChannel;
 
 export function log(message: any) {
   if (!outputChannel) {

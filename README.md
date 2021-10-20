@@ -3,6 +3,8 @@
 <p align="center">
   <a href="https://github.com/joeyhage/daily-novena/actions?query=workflow%3Aci">
     <img alt="Build Status" src="https://github.com/joeyhage/daily-novena/workflows/ci/badge.svg?branch=main"></a>
+  <a href="https://github.com/joeyhage/daily-novena/actions?query=workflow%3A%22daily+health+check%22">
+    <img alt="Daily Health Check" src="https://github.com/joeyhage/daily-novena/workflows/daily%20health%20check/badge.svg?branch=main"></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=joeyhage.daily-novena">
     <img alt="VS Code Marketplace Downloads" src="https://img.shields.io/visual-studio-marketplace/d/joeyhage.daily-novena"></a>
 </p>

@@ -3,50 +3,60 @@ import fetch from "node-fetch";
 import { QuickPickItem } from "vscode";
 import { COMMUNITY_NOVENA } from "./constants";
 import { ExtensionConfig, Novena, PostSection } from "./types";
+import { log } from "./util";
 
 export async function getLatestNovenaMetadata(): Promise<Novena> {
   const novena = new Novena();
+
+  let postCount = 0;
+  let anchorInSectionCount = 0;
+  let isHeaderAnchorTag = false;
   let postSection: PostSection | undefined;
-  let isMetadataAnchorTag = false;
 
   const parserStream = new WritableStream({
     onopentag(tagname: string, attributes: { class?: string; href?: string }) {
-      if (novena.isComplete()) {
-        return;
-      }
       const classNames = attributes.class?.split(" ") || [];
+      if (tagname === "div" && classNames.includes("post")) {
+        postCount++;
+        anchorInSectionCount = 0;
+      }
       if (
-        tagname === "div" &&
+        postCount === 1 &&
         (classNames.includes(PostSection.headerClassName) ||
           classNames.includes(PostSection.contentClassName))
       ) {
-        postSection = new PostSection(attributes.class!);
-      } else if (!!postSection && tagname === "a") {
-        isMetadataAnchorTag = true;
-        if (postSection.isHeader) {
+        postSection = new PostSection(classNames);
+        anchorInSectionCount = 0;
+      } else if (postCount === 1 && !!postSection && tagname === "a") {
+        anchorInSectionCount++;
+        if (postSection.isHeader && anchorInSectionCount === 1) {
           novena.podcastLink = attributes.href;
-        } else if (postSection.isContent) {
+          isHeaderAnchorTag = true;
+        } else if (postSection.isContent && anchorInSectionCount === 1) {
           novena.novenaLink = attributes.href;
         }
       }
     },
     ontext(text: string) {
-      if (isMetadataAnchorTag && postSection?.isHeader) {
-        novena.title += text.replace(/\n/, "");
+      if (isHeaderAnchorTag) {
+        novena.title += text;
       }
     },
     onclosetag(tagname: string) {
-      if (isMetadataAnchorTag && tagname === "a") {
-        postSection = undefined;
-        isMetadataAnchorTag = false;
-        novena.day =
-          <Novena["day"]>novena.title?.match(/[Dd]ay (\d)/)?.[1] || undefined;
+      isHeaderAnchorTag = false;
+      if (postCount === 1 && tagname === "a") {
+        if (postSection?.isHeader && anchorInSectionCount === 1) {
+          novena.day =
+            <Novena["day"]>Number(novena.title?.match(/Day (\d)/)?.[1]) || undefined;
+          novena.title = novena.title.match(/^(Final Prayer|Day \d)\s.\s(.*)\s\d{4}$/)?.[2] || novena.title;
+        }
       }
     },
   });
   return new Promise(async (resolve, reject) => {
     const res = await fetch("https://p.praymorenovenas.com/category/podcast");
     if (res.status !== 200) {
+      log(`getLatestNovenaMetadata: status code ${res.status}`);
       throw new Error("Bad status code");
     } else {
       res?.body
@@ -93,6 +103,7 @@ export async function getNovenaText(
   return new Promise(async (resolve, reject) => {
     const res = await fetch(config.novenaLink!);
     if (res.status !== 200) {
+      log(`getNovenaText: status code ${res.status}`);
       throw new Error("Bad status code");
     } else {
       res?.body
@@ -151,6 +162,7 @@ export async function getNovenaList(): Promise<QuickPickItem[]> {
   return new Promise(async (resolve, reject) => {
     const res = await fetch("https://www.praymorenovenas.com/novenas");
     if (res.status !== 200) {
+      log(`getNovenaList: status code ${res.status}`);
       throw new Error("Bad status code");
     } else {
       res?.body
