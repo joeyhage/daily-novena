@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish:
+  health-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

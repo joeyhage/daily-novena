@@ -1,15 +1,10 @@
-.git/
-.github/
 .vscode/
-.vscode-test/
-.vscode-test-web/
 
 src/
 
-package-lock.json
-.gitignore
+dailynovena.config.json
 tsconfig.json
-.eslintrc.json
+.gitignore
 
 **/*.map
 **/*.ts
