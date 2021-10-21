@@ -2,7 +2,7 @@
   "name": "daily-novena",
   "displayName": "Daily Novena",
   "description": "Read more Novenas",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": {
     "name": "Joey Hage",
     "url": "https://github.com/joeyhage"
@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/joeyhage/daily-novena",
   "engines": {
-    "node": "^14.0.0",
     "vscode": "^1.60.0"
   },
   "extensionKind": [
@@ -41,7 +40,7 @@
   "main": "./out/extension.js",
   "contributes": {
     "untrustedWorkspaces": {
-      "supported": true
+      "supported": false
     },
     "commands": [
       {
