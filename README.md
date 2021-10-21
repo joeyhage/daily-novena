@@ -13,7 +13,11 @@ Pray Novenas from [PrayMoreNovenas.com](https://www.praymorenovenas.com). Not af
 
 ## Features
 
-TODO
+### Using Command Palette (CMD/CTRL + Shift + P)
+
+- `Novena: Pray`: Display prayer for current Novena and day
+- `Novena: Choose`: Choose a Novena to pray. Choosing "Community Novena" will automatically choose the current Novena and day the PrayMoreNovenas community is praying.
+- `Novena: Change day`: Change day of the current Novena to pray.
 
 <!--\!\[feature X\]\(images/feature-x.png\)-->
 
@@ -23,15 +27,9 @@ None
 
 In the future, this extension may contribute the following settings:
 
-* `daily-novena.enable`: enable/disable this extension
-* `daily-novena.on-startup`: enable/disable showing the current Novena prayer on startup
+- `daily-novena.enable`: enable/disable this extension
+- `daily-novena.on-startup`: enable/disable showing the current Novena prayer on startup
 
-## Known Issues
-
-None
+## Issues
 
 [Report a bug](https://github.com/joeyhage/daily-novena/issues/new?assignees=&labels=&template=bug_report.md)
-
-## Release Notes
-
-TODO

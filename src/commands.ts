@@ -81,8 +81,8 @@ const chooseNovenaCommand = vscode.commands.registerCommand(
   }
 );
 
-const chooseNovenaDayCommand = vscode.commands.registerCommand(
-  `${COMMAND_PREFIX}.chooseNovenaDay`,
+const changeNovenaDayCommand = vscode.commands.registerCommand(
+  `${COMMAND_PREFIX}.changeNovenaDay`,
   async () => {
     const chosen = await vscode.window.showQuickPick(
       NOVENA_DAYS.map((day) => String(day)),
@@ -99,4 +99,4 @@ const chooseNovenaDayCommand = vscode.commands.registerCommand(
   }
 );
 
-export default [prayCommand, chooseNovenaCommand, chooseNovenaDayCommand];
+export default [prayCommand, chooseNovenaCommand, changeNovenaDayCommand];

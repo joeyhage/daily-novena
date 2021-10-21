@@ -36,7 +36,7 @@
     "onStartupFinished",
     "onCommand:dailynovena.pray",
     "onCommand:dailynovena.chooseNovena",
-    "onCommand:dailynovena.chooseNovenaDay"
+    "onCommand:dailynovena.changeNovenaDay"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -52,10 +52,10 @@
       {
         "command": "dailynovena.chooseNovena",
         "category": "Novena",
-        "title": "Change"
+        "title": "Choose"
       },
       {
-        "command": "dailynovena.chooseNovenaDay",
+        "command": "dailynovena.changeNovenaDay",
         "category": "Novena",
         "title": "Change day"
       }
