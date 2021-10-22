@@ -25,11 +25,11 @@ export class PostSection {
   }
 }
 
-export class ExtensionConfig {
-  prayCommunityNovena: boolean = true;
+export interface ExtensionConfigProps {
+  prayCommunityNovena: boolean;
   novenaName?: Novena["title"];
-  novenaLink: Novena["novenaLink"];
-  novenaDay: Novena["day"];
+  novenaLink?: Novena["novenaLink"];
+  novenaDay?: Novena["day"];
   lastChecked?: Date;
   lastPrayed?: Date;
 }

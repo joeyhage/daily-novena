@@ -2,7 +2,6 @@
 
 src/
 
-dailynovena.config.json
 tsconfig.json
 .gitignore
 

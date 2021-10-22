@@ -2,8 +2,8 @@ import { WritableStream } from "htmlparser2/lib/WritableStream";
 import fetch from "node-fetch";
 import { QuickPickItem } from "vscode";
 import { COMMUNITY_NOVENA } from "./constants";
-import { ExtensionConfig, Novena, PostSection } from "./types";
-import { log } from "./util";
+import { ExtensionConfigProps, Novena, PostSection } from "./types";
+import { log, LogLevel } from "./logger";
 
 export async function getLatestNovenaMetadata(): Promise<Novena> {
   const novena = new Novena();
@@ -56,7 +56,7 @@ export async function getLatestNovenaMetadata(): Promise<Novena> {
   return new Promise(async (resolve, reject) => {
     const res = await fetch("https://p.praymorenovenas.com/category/podcast");
     if (res.status !== 200) {
-      log(`getLatestNovenaMetadata: status code ${res.status}`);
+      log(LogLevel.error, `getLatestNovenaMetadata: status code ${res.status}`);
       throw new Error("Bad status code");
     } else {
       res?.body
@@ -68,7 +68,7 @@ export async function getLatestNovenaMetadata(): Promise<Novena> {
 }
 
 export async function getNovenaText(
-  config: ExtensionConfig
+  config: ExtensionConfigProps
 ): Promise<string | undefined> {
   if (!config.novenaDay || !config.novenaLink) {
     return;
@@ -103,7 +103,7 @@ export async function getNovenaText(
   return new Promise(async (resolve, reject) => {
     const res = await fetch(config.novenaLink!);
     if (res.status !== 200) {
-      log(`getNovenaText: status code ${res.status}`);
+      log(LogLevel.error, `getNovenaText: status code ${res.status}`);
       throw new Error("Bad status code");
     } else {
       res?.body
@@ -162,7 +162,7 @@ export async function getNovenaList(): Promise<QuickPickItem[]> {
   return new Promise(async (resolve, reject) => {
     const res = await fetch("https://www.praymorenovenas.com/novenas");
     if (res.status !== 200) {
-      log(`getNovenaList: status code ${res.status}`);
+      log(LogLevel.error, `getNovenaList: status code ${res.status}`);
       throw new Error("Bad status code");
     } else {
       res?.body

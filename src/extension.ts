@@ -2,12 +2,20 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import commands from "./commands";
-import { onActivate as activateConfig } from "./config";
+import { ExtensionConfig } from "./config";
+import { CONFIG_STORAGE_KEY } from "./constants";
+import { log, LogLevel, setLevel } from "./logger";
 
 export async function activate(context: vscode.ExtensionContext) {
-  activateConfig(context);
-
-  context.subscriptions.push(...commands);
+  if (context.extensionMode === vscode.ExtensionMode.Development) {
+    setLevel(LogLevel.debug);
+    log(LogLevel.always, "Running in development mode. Clearing global state.");
+    context.globalState.update(CONFIG_STORAGE_KEY, undefined);
+  }
+  const extensionConfig = new ExtensionConfig(context.globalState);
+  context.subscriptions.push(
+    ...commands.map((command) => command(extensionConfig))
+  );
 }
 
 export function deactivate() {}
