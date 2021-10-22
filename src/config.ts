@@ -1,54 +1,59 @@
-import fs from "fs";
-import { posix } from "path";
 import * as vscode from "vscode";
-import { COMMAND_PREFIX } from "./constants";
-import { ExtensionConfig } from "./types";
-import { log } from "./util";
+import { CONFIG_STORAGE_KEY } from "./constants";
+import { getLatestNovenaMetadata } from "./novena-api";
+import { ExtensionConfigProps, Novena } from "./types";
+import { log, LogLevel } from "./logger";
 
-let extConfigPath: string;
+export class ExtensionConfig {
+  private readonly globalState: vscode.ExtensionContext["globalState"];
 
-export async function onActivate(context: vscode.ExtensionContext) {
-  extConfigPath = posix.resolve(
-    context.extensionPath,
-    `${COMMAND_PREFIX}.config.json`
-  );
-  if (!fs.existsSync(extConfigPath)) {
-    log("Config file does not exist. Creating one now...");
-    await updateConfig(new ExtensionConfig());
+  constructor(globalState: vscode.ExtensionContext["globalState"]) {
+    this.globalState = globalState;
+    if (!globalState.keys().includes(CONFIG_STORAGE_KEY)) {
+      getLatestNovenaMetadata().then((novena) => {
+        this.update(ExtensionConfig.convertFromCommunity(novena));
+      });
+    }
   }
-}
 
-export async function updateConfig(
-  config: Partial<ExtensionConfig>
-): Promise<void> {
-  const oldConfig = await getConfig();
-  return handleFile<void>(async (file) => {
-    log({ oldConfig, newConfig: config });
-    await file.writeFile(
-      JSON.stringify({ ...oldConfig, ...config }, undefined, 2)
-    );
-  }, "w");
-}
-
-export async function getConfig(): Promise<ExtensionConfig | undefined> {
-  return handleFile<ExtensionConfig>(async (file) => {
-    const rawContent = await file.readFile({ encoding: "utf-8" });
-    return JSON.parse(rawContent);
-  }, "r");
-}
-
-async function handleFile<T>(
-  func: (file: fs.promises.FileHandle) => Promise<T>,
-  flags: string
-): Promise<T | undefined> {
-  let file: fs.promises.FileHandle | undefined;
-  try {
-    file = await fs.promises.open(extConfigPath, flags);
-    return func(file);
-  } catch (e) {
-    log({ message: "config file error", e });
-  } finally {
-    await file?.close();
+  get(): ExtensionConfigProps {
+    const config =
+      this.globalState.get<ExtensionConfigProps>(CONFIG_STORAGE_KEY)!;
+    log(LogLevel.debug, { message: "get config", config });
+    return config;
   }
-  return undefined;
+
+  async update(config: Partial<ExtensionConfigProps>) {
+    const oldConfig = this.get();
+    const newConfig = { ...oldConfig, ...config };
+    log(LogLevel.debug, { oldConfig, newConfig });
+    await this.globalState.update(CONFIG_STORAGE_KEY, {
+      ...oldConfig,
+      ...config,
+    });
+  }
+
+  static convertFromCommunity(novena: Novena): ExtensionConfigProps {
+    return {
+      prayCommunityNovena: true,
+      novenaName: novena.title,
+      novenaLink: novena.novenaLink,
+      novenaDay: novena.day,
+      lastChecked: new Date(),
+      lastPrayed: undefined,
+    };
+  }
+
+  static convertFromChosen(
+    chosen?: vscode.QuickPickItem
+  ): ExtensionConfigProps {
+    return {
+      prayCommunityNovena: false,
+      novenaName: chosen?.label,
+      novenaLink: chosen?.detail,
+      novenaDay: 1,
+      lastChecked: new Date(),
+      lastPrayed: undefined,
+    };
+  }
 }

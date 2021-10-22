@@ -2,7 +2,7 @@
   "name": "daily-novena",
   "displayName": "Daily Novena",
   "description": "Read more Novenas",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": {
     "name": "Joey Hage",
     "url": "https://github.com/joeyhage"
@@ -33,9 +33,9 @@
   ],
   "activationEvents": [
     "onStartupFinished",
-    "onCommand:dailynovena.pray",
-    "onCommand:dailynovena.chooseNovena",
-    "onCommand:dailynovena.changeNovenaDay"
+    "onCommand:dailyNovena.pray",
+    "onCommand:dailyNovena.chooseNovena",
+    "onCommand:dailyNovena.changeNovenaDay"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -44,21 +44,46 @@
     },
     "commands": [
       {
-        "command": "dailynovena.pray",
+        "command": "dailyNovena.pray",
         "category": "Novena",
         "title": "Pray"
       },
       {
-        "command": "dailynovena.chooseNovena",
+        "command": "dailyNovena.chooseNovena",
         "category": "Novena",
         "title": "Choose"
       },
       {
-        "command": "dailynovena.changeNovenaDay",
+        "command": "dailyNovena.changeNovenaDay",
         "category": "Novena",
         "title": "Change day"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Daily Novena",
+      "properties": {
+        "dailyNovena.logLevel": {
+          "type": "string",
+          "scope": "application",
+          "description": "Set the Debug Level for logging messages.",
+          "enum": [
+            "None",
+            "Error",
+            "Warning",
+            "Information",
+            "Debug"
+          ],
+          "default": "Error",
+          "enumDescriptions": [
+            "Do not log",
+            "Log only errors",
+            "Log errors and warnings",
+            "Log errors, warnings, and info",
+            "Log everything (noisy)"
+          ]
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -68,27 +93,28 @@
     "pretest": "npm run compile && npm run lint",
     "test": "mocha './out/test/*.test.js'",
     "prevscodetest": "npm run compile && npm run lint",
-    "vscodetest": "node ./out/test/runTest.js"
+    "vscodetest": "node ./out/test/runTest.js",
+    "update": "npx npm-check-updates -u --target minor"
   },
   "devDependencies": {
     "@types/chai": "^4.2.22",
-    "@types/glob": "^7.1.4",
+    "@types/glob": "^7.2.0",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^14.0.0",
-    "@types/node-fetch": "^2.0.0",
-    "@types/vscode": "^1.60.0",
-    "@typescript-eslint/eslint-plugin": "^4.31.1",
-    "@typescript-eslint/parser": "^4.31.1",
+    "@types/node": "^14.17.29",
+    "@types/node-fetch": "^2.5.12",
+    "@types/vscode": "^1.61.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "@vscode/test-electron": "^1.6.2",
     "chai": "^4.3.4",
     "eslint": "^7.32.0",
-    "glob": "^7.1.7",
-    "mocha": "^9.1.1",
+    "glob": "^7.2.0",
+    "mocha": "^9.1.3",
     "testdouble": "^3.16.2",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.4"
   },
   "dependencies": {
     "htmlparser2": "^7.1.2",
-    "node-fetch": "^2.0.0"
+    "node-fetch": "^2.6.5"
   }
 }

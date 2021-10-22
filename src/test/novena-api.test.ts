@@ -1,5 +1,5 @@
 import * as td from "testdouble";
-td.replace("../util", {
+td.replace("../logger", {
   log: console.log,
 });
 import { expect } from "chai";
