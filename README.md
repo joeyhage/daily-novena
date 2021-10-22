@@ -23,12 +23,9 @@ Pray Novenas from [PrayMoreNovenas.com](https://www.praymorenovenas.com). Not af
 
 ## Extension Settings
 
-None
-
-In the future, this extension may contribute the following settings:
-
-- `daily-novena.enable`: enable/disable this extension
-- `daily-novena.on-startup`: enable/disable showing the current Novena prayer on startup
+| Command                | Scope       | Description                               |
+| ---------------------- | ----------- | ----------------------------------------- |
+| `dailyNovena.logLevel` | application | Set the Debug Level for logging messages. |
 
 ## Issues
 

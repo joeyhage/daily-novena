@@ -1,4 +1,4 @@
-export const COMMAND_PREFIX = "dailynovena";
+export const COMMAND_PREFIX = "dailyNovena";
 
 export const CONFIG_STORAGE_KEY = `${COMMAND_PREFIX}.config`;
 

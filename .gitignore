@@ -6,4 +6,3 @@ node_modules/
 
 *.vsix
 .npmrc
-dailynovena.config.json
