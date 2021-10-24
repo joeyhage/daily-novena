@@ -1,6 +1,7 @@
 import * as td from "testdouble";
-td.replace("../logger", {
-  log: console.log,
+td.replace("vscode", {
+  window: { createOutputChannel: td.function() },
+  workspace: { getConfiguration: td.function() },
 });
 import { expect } from "chai";
 import { getLatestNovenaMetadata, getNovenaList } from "../novena-api";
@@ -16,10 +17,23 @@ it("should obtain Novena metadata for most recent Novena", async () => {
   const novena = await getLatestNovenaMetadata();
 
   // THEN
-  expect(novena.title).to.match(/^[a-zA-Záí.,'"’&| -]+$/);
-  expect(novena.day).to.be.within(1, 9);
-  expect(novena.novenaLink).to.match(new RegExp(`^${NOVENA_LINK_REGEX}$`));
-  expect(novena.podcastLink).to.not.be.empty;
+  expect(novena.title).to.match(
+    /^[a-zA-Záí.,'"’&| -]+$/,
+    `Title ${novena.title} did not match`
+  );
+  expect(novena.day).to.be.within(
+    1,
+    9,
+    `Day ${novena.day} was not within 1 and 9`
+  );
+  expect(novena.novenaLink).to.match(
+    new RegExp(`^${NOVENA_LINK_REGEX}$`),
+    `Novena Link ${novena.novenaLink} did not match`
+  );
+  expect(novena.podcastLink).to.match(
+    new RegExp("^.+$"),
+    "Podcast Link was empty"
+  );
 });
 
 it("should build approximately 250 Novenas for `QuickPick` when Novena list is retrieved", async () => {
@@ -31,13 +45,13 @@ it("should build approximately 250 Novenas for `QuickPick` when Novena list is r
   novenaList.forEach((novena) => {
     expect(novena.label).to.match(
       /^[a-zA-Záí.,'"’&| -]+$/,
-      `${JSON.stringify(novena)} had empty label`
+      `Novena '${JSON.stringify(novena)}' had empty label`
     );
     expect(novena.detail).to.match(
       new RegExp(
         `^(${NOVENA_LINK_REGEX}|Set current Novena and day to community Novena\.)$`
       ),
-      `${novena.detail} did not match expected url.`
+      `Detail '${novena.detail}' did not match expected url.`
     );
   });
 });
