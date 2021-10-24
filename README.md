@@ -29,7 +29,7 @@ Pray Novenas from [PrayMoreNovenas.com](https://www.praymorenovenas.com). Not af
 
 These settings are specific to VS Code and need to be set in the VS Code settings file. See the [documentation](https://code.visualstudio.com/docs/getstarted/settings) for how to do that.
 
-### dailyNovena.remindOnStartup (default: `true`)
+#### dailyNovena.remindOnStartup (default: `true`)
 
 Each time VS Code starts, check to see if you have prayed yet for the day. If not, ask you if you would like to continue the current Novena.
 
