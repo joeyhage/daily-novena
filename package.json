@@ -63,7 +63,7 @@
     "configuration": {
       "title": "Daily Novena",
       "properties": {
-        "logLevel": {
+        "dailyNovena.logLevel": {
           "type": "string",
           "scope": "application",
           "description": "Set the Debug Level for logging messages.",

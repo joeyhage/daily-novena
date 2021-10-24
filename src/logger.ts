@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { COMMAND_PREFIX } from "./constants";
 
 let outputChannel: vscode.OutputChannel | undefined;
 
@@ -19,7 +20,7 @@ export function log(level: LogLevel, message: any) {
   }
   if (!logLevel) {
     const configLogLevel = <keyof typeof LogLevel>(
-      String(vscode.workspace.getConfiguration().get("logLevel"))
+      String(vscode.workspace.getConfiguration(COMMAND_PREFIX).get("logLevel"))
     );
     logLevel = LogLevel[configLogLevel] || LogLevel.error;
   }

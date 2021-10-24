@@ -6,7 +6,11 @@
   <a href="https://github.com/joeyhage/daily-novena/actions?query=workflow%3A%22daily+health+check%22">
     <img alt="Daily Health Check" src="https://github.com/joeyhage/daily-novena/workflows/daily%20health%20check/badge.svg?branch=main"></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=joeyhage.daily-novena">
-    <img alt="VS Code Marketplace Downloads" src="https://img.shields.io/visual-studio-marketplace/d/joeyhage.daily-novena"></a>
+    <img alt="Build Status" src="https://img.shields.io/visual-studio-marketplace/v/joeyhage.daily-novena?cacheSeconds=3600&logo=visualstudiocode"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=joeyhage.daily-novena">
+    <img alt="VS Code Marketplace Last Updated" src="https://img.shields.io/visual-studio-marketplace/last-updated/joeyhage.daily-novena?cacheSeconds=3600&logo=visualstudiocode"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=joeyhage.daily-novena">
+    <img alt="VS Code Marketplace Downloads" src="https://img.shields.io/visual-studio-marketplace/d/joeyhage.daily-novena?cacheSeconds=3600&logo=visualstudiocode"></a>
 </p>
 
 Pray Novenas from [PrayMoreNovenas.com](https://www.praymorenovenas.com). Not affiliated in any way with PrayMoreNovenas.com.
@@ -23,9 +27,11 @@ Pray Novenas from [PrayMoreNovenas.com](https://www.praymorenovenas.com). Not af
 
 ## Extension Settings
 
-| Command                | Scope       | Description                               |
-| ---------------------- | ----------- | ----------------------------------------- |
-| `dailyNovena.logLevel` | application | Set the Debug Level for logging messages. |
+These settings are specific to VS Code and need to be set in the VS Code settings file. See the [documentation](https://code.visualstudio.com/docs/getstarted/settings) for how to do that.
+
+### dailyNovena.logLevel (default: `error`)
+
+Set the Debug Level for logging messages.
 
 ## Issues
 
