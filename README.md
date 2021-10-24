@@ -25,11 +25,11 @@ Pray Novenas from [PrayMoreNovenas.com](https://www.praymorenovenas.com). Not af
 
 <!--\!\[feature X\]\(images/feature-x.png\)-->
 
-## Extension Settings
+### Extension Settings
 
 These settings are specific to VS Code and need to be set in the VS Code settings file. See the [documentation](https://code.visualstudio.com/docs/getstarted/settings) for how to do that.
 
-### dailyNovena.logLevel (default: `error`)
+#### dailyNovena.logLevel (default: `error`)
 
 Set the Debug Level for logging messages.
 
