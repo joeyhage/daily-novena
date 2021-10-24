@@ -7,8 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.7] - 2021-10-24
+### Added
+- VS Code setting to remind on startup. Only checks setting on VS Code startup. See README for instructions on the dailyNovena.remindOnStartup setting.
+
+### Fixed
+- Correctly setting log level based on user setting.
+
 ## [0.0.6] - 2021-10-22
-### Added 
+### Added
 - VS Code setting to change log level. Only checks setting on VS Code startup.
 
 ### Changed
@@ -37,7 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Not published.
 
-[Unreleased]: https://github.com/joeyhage/daily-novena/compare/v0.0.6...HEAD
+[Unreleased]: https://github.com/joeyhage/daily-novena/compare/v0.0.7...HEAD
+[0.0.6]: https://github.com/joeyhage/daily-novena/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/joeyhage/daily-novena/compare/v0.0.5...v0.0.6
 [0.0.5]: https://github.com/joeyhage/daily-novena/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/joeyhage/daily-novena/compare/v0.0.3...v0.0.4

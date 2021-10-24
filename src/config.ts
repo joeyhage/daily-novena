@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { CONFIG_STORAGE_KEY } from "./constants";
+import { COMMAND_PREFIX, CONFIG_STORAGE_KEY } from "./constants";
 import { getLatestNovenaMetadata } from "./novena-api";
 import { ExtensionConfigProps, Novena } from "./types";
 import { log, LogLevel } from "./logger";
@@ -9,29 +9,56 @@ export class ExtensionConfig {
 
   constructor(globalState: vscode.ExtensionContext["globalState"]) {
     this.globalState = globalState;
-    if (!globalState.keys().includes(CONFIG_STORAGE_KEY)) {
-      getLatestNovenaMetadata().then(async (novena) => {
-        await this.update(ExtensionConfig.convertFromCommunity(novena));
-        this.globalState.setKeysForSync([CONFIG_STORAGE_KEY]);
-      });
+  }
+
+  static async init(
+    globalState: vscode.ExtensionContext["globalState"]
+  ): Promise<ExtensionConfig> {
+    if (!globalState.get(CONFIG_STORAGE_KEY)) {
+      const extensionConfig = new ExtensionConfig(globalState);
+
+      await extensionConfig.update(
+        ExtensionConfig.convertFromCommunity(await getLatestNovenaMetadata())
+      );
+      globalState.setKeysForSync([CONFIG_STORAGE_KEY]);
+      return extensionConfig;
     }
+    return new ExtensionConfig(globalState);
   }
 
   get(): ExtensionConfigProps {
     const config =
-      this.globalState.get<ExtensionConfigProps>(CONFIG_STORAGE_KEY)!;
+      this.globalState.get<ExtensionConfigProps>(CONFIG_STORAGE_KEY);
     log(LogLevel.debug, { message: "get config", config });
-    return config;
+    return config
+      ? {
+          ...config,
+          lastChecked: ExtensionConfig.convertToDate(config.lastChecked),
+          lastPrayed: ExtensionConfig.convertToDate(config.lastPrayed),
+        }
+      : { prayCommunityNovena: true };
   }
 
   async update(config: Partial<ExtensionConfigProps>) {
     const oldConfig = this.get();
     const newConfig = { ...oldConfig, ...config };
-    log(LogLevel.debug, { oldConfig, newConfig });
+    log(LogLevel.debug, { message: "update config", oldConfig, newConfig });
     await this.globalState.update(CONFIG_STORAGE_KEY, {
       ...oldConfig,
       ...config,
     });
+  }
+
+  static getWorkspaceConfiguration(setting: string) {
+    const value = vscode.workspace
+      .getConfiguration(COMMAND_PREFIX)
+      .get(setting);
+    log(LogLevel.debug, {
+      message: "getWorkspaceConfiguration",
+      setting,
+      value,
+    });
+    return vscode.workspace.getConfiguration(COMMAND_PREFIX).get(setting);
   }
 
   static convertFromCommunity(
@@ -56,5 +83,11 @@ export class ExtensionConfig {
       lastChecked: new Date(),
       lastPrayed: undefined,
     };
+  }
+
+  private static convertToDate(
+    dateString: Date | string | undefined
+  ): Date | undefined {
+    return dateString ? new Date(dateString) : undefined;
   }
 }

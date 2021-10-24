@@ -4,45 +4,55 @@ import { COMMAND_PREFIX, COMMUNITY_NOVENA, NOVENA_DAYS } from "./constants";
 import {
   getLatestNovenaMetadata,
   getNovenaList,
-  getNovenaText
+  getNovenaText,
 } from "./novena-api";
-import { Novena } from "./types";
+import { ExtensionConfigProps, Novena } from "./types";
 import { log, LogLevel } from "./logger";
+
+async function retrievePrayer(
+  config: ExtensionConfigProps
+): Promise<Partial<Novena> | undefined> {
+  let novena: Partial<Novena> | undefined;
+  await vscode.window.withProgress(
+    {
+      location: vscode.ProgressLocation.Notification,
+      title: "Loading Novena",
+      cancellable: false,
+    },
+    async (progress) => {
+      try {
+        progress?.report({ increment: 50 });
+        const novenaText = await getNovenaText(config);
+        novena = {
+          title: config.novenaName,
+          day: config.novenaDay,
+          novenaLink: config.novenaLink,
+          text: novenaText,
+        };
+      } catch (e) {
+        log(LogLevel.error, e);
+        novena = undefined;
+      }
+    }
+  );
+  return novena;
+}
+
+function displayPrayer(novena: Partial<Novena>) {
+  const column = vscode.window.activeTextEditor
+    ? vscode.window.activeTextEditor.viewColumn
+    : 1;
+  const panel = vscode.window.createWebviewPanel(
+    COMMAND_PREFIX,
+    `${novena.title} - Day ${novena.day}`,
+    column || 1
+  );
+  panel.webview.html = `<h1>${novena.title}</h1><h2>Day ${novena.day}</h2>${novena.text}`;
+}
 
 const prayCommand = (extensionConfig: ExtensionConfig) => {
   return vscode.commands.registerCommand(`${COMMAND_PREFIX}.pray`, async () => {
-    const novena: Partial<Novena> = {};
-    await vscode.window.withProgress(
-      {
-        location: vscode.ProgressLocation.Notification,
-        title: "Loading Novena",
-        cancellable: false,
-      },
-      async (progress) => {
-        const config = extensionConfig.get();
-        if (config) {
-          progress.report({ increment: 50 });
-          const novenaText = await getNovenaText(config);
-          novena.title = config.novenaName!;
-          novena.day = config.novenaDay!;
-          novena.novenaLink = config.novenaLink;
-          novena.text = novenaText;
-        } else {
-          vscode.window.showErrorMessage(
-            "An error occurred loading the Novena"
-          );
-        }
-      }
-    );
-    const column = vscode.window.activeTextEditor
-      ? vscode.window.activeTextEditor.viewColumn
-      : 1;
-    const panel = vscode.window.createWebviewPanel(
-      COMMAND_PREFIX,
-      `${novena.title} - Day ${novena.day}`,
-      column || 1
-    );
-    panel.webview.html = `<h1>${novena.title}</h1><h2>Day ${novena.day}</h2>${novena.text}`;
+    await pray(extensionConfig);
   });
 };
 
@@ -67,7 +77,7 @@ const chooseNovenaCommand = (extensionConfig: ExtensionConfig) => {
           );
         }
       } catch (e) {
-        log(LogLevel.error, { message: 'Error in chooseNovenaCommand', e });
+        log(LogLevel.error, { message: "Error in chooseNovenaCommand", e });
       }
     }
   );
@@ -91,5 +101,21 @@ const changeNovenaDayCommand = (extensionConfig: ExtensionConfig) => {
     }
   );
 };
+
+export async function pray(extensionConfig: ExtensionConfig) {
+  const config = extensionConfig.get();
+  const novena = await retrievePrayer(config);
+  if (novena) {
+    displayPrayer(novena);
+    extensionConfig.update({
+      novenaDay: <Novena["day"]>(
+        (config.novenaDay! < 9 ? config.novenaDay! + 1 : config.novenaDay!)
+      ),
+      lastPrayed: new Date(),
+    });
+  } else {
+    vscode.window.showErrorMessage("An error occurred loading the Novena");
+  }
+}
 
 export default [prayCommand, chooseNovenaCommand, changeNovenaDayCommand];

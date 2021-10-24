@@ -63,6 +63,20 @@
     "configuration": {
       "title": "Daily Novena",
       "properties": {
+        "dailyNovena.remindOnStartup": {
+          "type": "boolean",
+          "scope": "application",
+          "description": "If you haven't prayed yet on a given day, remind you to pray when VS Code starts",
+          "enum": [
+            true,
+            false
+          ],
+          "default": true,
+          "enumDescriptions": [
+            "Please remind me",
+            "Please don't remind me"
+          ]
+        },
         "dailyNovena.logLevel": {
           "type": "string",
           "scope": "application",
