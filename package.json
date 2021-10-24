@@ -8,6 +8,7 @@
     "url": "https://github.com/joeyhage"
   },
   "publisher": "joeyhage",
+  "icon": "icon.jpeg",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,7 +19,7 @@
   },
   "homepage": "https://github.com/joeyhage/daily-novena",
   "engines": {
-    "vscode": "^1.60.0"
+    "vscode": "^1.61.0"
   },
   "extensionKind": [
     "workspace"
@@ -62,18 +63,18 @@
     "configuration": {
       "title": "Daily Novena",
       "properties": {
-        "dailyNovena.logLevel": {
+        "logLevel": {
           "type": "string",
           "scope": "application",
           "description": "Set the Debug Level for logging messages.",
           "enum": [
-            "None",
-            "Error",
-            "Warning",
-            "Information",
-            "Debug"
+            "none",
+            "error",
+            "warn",
+            "info",
+            "debug"
           ],
-          "default": "Error",
+          "default": "error",
           "enumDescriptions": [
             "Do not log",
             "Log only errors",
@@ -92,6 +93,8 @@
     "lint": "eslint src --ext ts",
     "pretest": "npm run compile && npm run lint",
     "test": "mocha './out/test/*.test.js'",
+    "premocha": "npm run pretest",
+    "mocha": "mocha",
     "prevscodetest": "npm run compile && npm run lint",
     "vscodetest": "node ./out/test/runTest.js",
     "update": "npx npm-check-updates -u --target minor"

@@ -10,8 +10,9 @@ export class ExtensionConfig {
   constructor(globalState: vscode.ExtensionContext["globalState"]) {
     this.globalState = globalState;
     if (!globalState.keys().includes(CONFIG_STORAGE_KEY)) {
-      getLatestNovenaMetadata().then((novena) => {
-        this.update(ExtensionConfig.convertFromCommunity(novena));
+      getLatestNovenaMetadata().then(async (novena) => {
+        await this.update(ExtensionConfig.convertFromCommunity(novena));
+        this.globalState.setKeysForSync([CONFIG_STORAGE_KEY]);
       });
     }
   }
@@ -33,7 +34,9 @@ export class ExtensionConfig {
     });
   }
 
-  static convertFromCommunity(novena: Novena): ExtensionConfigProps {
+  static convertFromCommunity(
+    novena: Pick<Novena, "title" | "day" | "novenaLink">
+  ): ExtensionConfigProps {
     return {
       prayCommunityNovena: true,
       novenaName: novena.title,
@@ -44,9 +47,7 @@ export class ExtensionConfig {
     };
   }
 
-  static convertFromChosen(
-    chosen?: vscode.QuickPickItem
-  ): ExtensionConfigProps {
+  static convertFromChosen(chosen: vscode.QuickPickItem): ExtensionConfigProps {
     return {
       prayCommunityNovena: false,
       novenaName: chosen?.label,

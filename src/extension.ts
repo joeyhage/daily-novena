@@ -4,11 +4,10 @@ import * as vscode from "vscode";
 import commands from "./commands";
 import { ExtensionConfig } from "./config";
 import { CONFIG_STORAGE_KEY } from "./constants";
-import { log, LogLevel, setLevel } from "./logger";
+import { log, LogLevel } from "./logger";
 
 export async function activate(context: vscode.ExtensionContext) {
   if (context.extensionMode === vscode.ExtensionMode.Development) {
-    setLevel(LogLevel.debug);
     log(LogLevel.always, "Running in development mode. Clearing global state.");
     context.globalState.update(CONFIG_STORAGE_KEY, undefined);
   }
