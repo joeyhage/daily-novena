@@ -19,7 +19,7 @@ Pray Novenas from [PrayMoreNovenas.com](https://www.praymorenovenas.com). Not af
 
 ### Using Command Palette (CMD/CTRL + Shift + P)
 
-- `Novena: Pray`: Display prayer for current Novena and day
+- `Novena: Pray`: Display prayer for current Novena and day. This also increments the current day by one. For example, if you are praying day one of the St. Therese of Lisieux Novena, it will change it to day two of the St. Therese of Lisieux Novena.
 - `Novena: Choose`: Choose a Novena to pray. Choosing "Community Novena" will automatically choose the current Novena and day the PrayMoreNovenas community is praying.
 - `Novena: Change day`: Change day of the current Novena to pray.
 
@@ -28,6 +28,10 @@ Pray Novenas from [PrayMoreNovenas.com](https://www.praymorenovenas.com). Not af
 ### Extension Settings
 
 These settings are specific to VS Code and need to be set in the VS Code settings file. See the [documentation](https://code.visualstudio.com/docs/getstarted/settings) for how to do that.
+
+### dailyNovena.remindOnStartup (default: `true`)
+
+Each time VS Code starts, check to see if you have prayed yet for the day. If not, ask you if you would like to continue the current Novena.
 
 #### dailyNovena.logLevel (default: `error`)
 
