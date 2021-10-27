@@ -6,6 +6,7 @@ export class Novena {
   podcastLink?: string;
   day?: typeof NOVENA_DAYS[number];
   text?: string;
+  postDate?: Date;
 
   isComplete(): boolean {
     return Boolean(this.title) && Boolean(this.novenaLink);
@@ -32,4 +33,5 @@ export interface ExtensionConfigProps {
   novenaDay?: Novena["day"];
   lastChecked?: Date;
   lastPrayed?: Date;
+  mostRecentCommunityDate?: Date;
 }

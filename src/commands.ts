@@ -8,6 +8,7 @@ import {
 } from "./novena-api";
 import { ExtensionConfigProps, Novena } from "./types";
 import { log, LogLevel } from "./logger";
+import { toStartOfDay } from "./util";
 
 async function retrievePrayer(
   config: ExtensionConfigProps
@@ -47,7 +48,10 @@ function displayPrayer(novena: Partial<Novena>) {
     `${novena.title} - Day ${novena.day}`,
     column || 1
   );
-  panel.webview.html = `<h1>${novena.title}</h1><h2>Day ${novena.day}</h2>${novena.text}`;
+  const postDate = novena.postDate
+    ? `<p>Posted on ${novena.postDate.toLocaleDateString()}</p>`
+    : "";
+  panel.webview.html = `<h1>${novena.title}</h1>${postDate}<h2>Day ${novena.day}</h2>${novena.text}`;
 }
 
 const prayCommand = (extensionConfig: ExtensionConfig) => {
@@ -106,12 +110,15 @@ export async function pray(extensionConfig: ExtensionConfig) {
   const config = extensionConfig.get();
   const novena = await retrievePrayer(config);
   if (novena) {
+    if (config.prayCommunityNovena) {
+      novena.postDate = config.mostRecentCommunityDate;
+    }
     displayPrayer(novena);
     extensionConfig.update({
       novenaDay: <Novena["day"]>(
         (config.novenaDay! < 9 ? config.novenaDay! + 1 : config.novenaDay!)
       ),
-      lastPrayed: new Date(),
+      lastPrayed: toStartOfDay(new Date()),
     });
   } else {
     vscode.window.showErrorMessage("An error occurred loading the Novena");

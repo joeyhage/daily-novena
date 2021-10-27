@@ -3,6 +3,7 @@ import { COMMAND_PREFIX, CONFIG_STORAGE_KEY } from "./constants";
 import { getLatestNovenaMetadata } from "./novena-api";
 import { ExtensionConfigProps, Novena } from "./types";
 import { log, LogLevel } from "./logger";
+import { toStartOfDay } from "./util";
 
 export class ExtensionConfig {
   private readonly globalState: vscode.ExtensionContext["globalState"];
@@ -35,6 +36,7 @@ export class ExtensionConfig {
           ...config,
           lastChecked: ExtensionConfig.convertToDate(config.lastChecked),
           lastPrayed: ExtensionConfig.convertToDate(config.lastPrayed),
+          mostRecentCommunityDate: ExtensionConfig.convertToDate(config.mostRecentCommunityDate),
         }
       : { prayCommunityNovena: true };
   }
@@ -62,15 +64,16 @@ export class ExtensionConfig {
   }
 
   static convertFromCommunity(
-    novena: Pick<Novena, "title" | "day" | "novenaLink">
+    novena: Pick<Novena, "title" | "day" | "novenaLink" | "postDate">
   ): ExtensionConfigProps {
     return {
       prayCommunityNovena: true,
       novenaName: novena.title,
       novenaLink: novena.novenaLink,
       novenaDay: novena.day,
-      lastChecked: new Date(),
+      lastChecked: toStartOfDay(new Date()),
       lastPrayed: undefined,
+      mostRecentCommunityDate: novena.postDate,
     };
   }
 
@@ -80,7 +83,7 @@ export class ExtensionConfig {
       novenaName: chosen?.label,
       novenaLink: chosen?.detail,
       novenaDay: 1,
-      lastChecked: new Date(),
+      lastChecked: toStartOfDay(new Date()),
       lastPrayed: undefined,
     };
   }

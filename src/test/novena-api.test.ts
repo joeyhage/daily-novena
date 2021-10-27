@@ -1,10 +1,15 @@
 import * as td from "testdouble";
 td.replace("vscode", {
-  window: { createOutputChannel: td.function() },
-  workspace: { getConfiguration: td.function() },
+  window: { createOutputChannel: () => ({ appendLine: console.log }) },
+  workspace: { getConfiguration: () => ({ get: () => "error" }) },
 });
 import { expect } from "chai";
-import { getLatestNovenaMetadata, getNovenaList } from "../novena-api";
+import {
+  getLatestNovenaMetadata,
+  getNovenaList,
+  getNovenaText,
+} from "../novena-api";
+import { ExtensionConfigProps } from "../types";
 
 const NOVENA_LINK_REGEX = "https://www\\.praymorenovenas\\.com/[a-zA-Z\\d-]+";
 
@@ -34,6 +39,7 @@ it("should obtain Novena metadata for most recent Novena", async () => {
     new RegExp("^.+$"),
     "Podcast Link was empty"
   );
+  expect(novena.postDate?.toISOString()).to.match(/^\d{4}-\d{2}-\d{2}T/, "Novena post date was not valid");
 });
 
 it("should build approximately 250 Novenas for `QuickPick` when Novena list is retrieved", async () => {
@@ -54,4 +60,21 @@ it("should build approximately 250 Novenas for `QuickPick` when Novena list is r
       `Detail '${novena.detail}' did not match expected url.`
     );
   });
+});
+
+it("should correctly extract the HTML for a given Novena and day", async () => {
+  // GIVEN
+  const config = <ExtensionConfigProps>{
+    prayCommunityNovena: false,
+    novenaLink: "https://www.praymorenovenas.com/st-therese-novena",
+    novenaDay: 5,
+  };
+
+  // WHEN
+  const text = await getNovenaText(config);
+
+  // THEN
+  expect(text).to.match(
+    /^<p>In the name.+<p>Loving God, You gave St\. Therese the gift of forgiving others.+Amen\..<\/p>$/
+  );
 });
