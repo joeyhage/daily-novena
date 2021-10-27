@@ -1,11 +1,15 @@
 import * as td from "testdouble";
 td.replace("vscode", {
-  window: { createOutputChannel: td.function() },
-  workspace: { getConfiguration: td.function() },
+  window: { createOutputChannel: () => ({ appendLine: console.log }) },
+  workspace: { getConfiguration: () => ({ get: () => "error" }) },
 });
 import { expect } from "chai";
 import { ExtensionConfig } from "../config";
 import { ExtensionConfigProps, Novena } from "../types";
+
+afterEach(() => {
+  td.reset();
+});
 
 it("should convert from Novena to ExtensionConfig", () => {
   // GIVEN
@@ -13,6 +17,7 @@ it("should convert from Novena to ExtensionConfig", () => {
     title: "St. Therese of Lisieux",
     day: <Novena["day"]>1,
     novenaLink: "the link",
+    postDate: new Date("Monday, October 25, 2021")
   };
 
   // WHEN
@@ -27,6 +32,7 @@ it("should convert from Novena to ExtensionConfig", () => {
     lastPrayed: undefined,
   });
   expect(config.lastChecked).to.be.an.instanceof(Date);
+  expect(config.mostRecentCommunityDate).to.be.an.instanceof(Date);
 });
 
 it("should convert from QuickPickItem to ExtensionConfig", () => {

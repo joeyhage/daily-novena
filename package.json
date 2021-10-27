@@ -2,7 +2,7 @@
   "name": "daily-novena",
   "displayName": "Daily Novena",
   "description": "Read more Novenas",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": {
     "name": "Joey Hage",
     "url": "https://github.com/joeyhage"
@@ -117,7 +117,7 @@
     "@types/chai": "^4.2.22",
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^14.17.29",
+    "@types/node": "^14.17.32",
     "@types/node-fetch": "^2.5.12",
     "@types/vscode": "^1.61.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
