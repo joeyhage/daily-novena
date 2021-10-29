@@ -26,10 +26,11 @@ it("should obtain Novena metadata for most recent Novena", async () => {
     /^[a-zA-Záí.,'"’&| -]+$/,
     `Title ${novena.title} did not match`
   );
-  expect(novena.day).to.be.within(
-    1,
-    9,
-    `Day ${novena.day} was not within 1 and 9`
+
+  expect(novena).to.satisfy(
+    () =>
+      novena.isFinalDay || (Number(novena.day) >= 1 && Number(novena.day) <= 9),
+    "Novena should be final day or be a day between 1 and 9"
   );
   expect(novena.novenaLink).to.match(
     new RegExp(`^${NOVENA_LINK_REGEX}$`),
@@ -39,7 +40,10 @@ it("should obtain Novena metadata for most recent Novena", async () => {
     new RegExp("^.+$"),
     "Podcast Link was empty"
   );
-  expect(novena.postDate?.toISOString()).to.match(/^\d{4}-\d{2}-\d{2}T/, "Novena post date was not valid");
+  expect(novena.postDate?.toISOString()).to.match(
+    /^\d{4}-\d{2}-\d{2}T/,
+    "Novena post date was not valid"
+  );
 });
 
 it("should build approximately 250 Novenas for `QuickPick` when Novena list is retrieved", async () => {

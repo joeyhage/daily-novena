@@ -2,6 +2,7 @@ import { NOVENA_DAYS } from "./constants";
 
 export class Novena {
   title = "";
+  isFinalDay = false;
   novenaLink?: string;
   podcastLink?: string;
   day?: typeof NOVENA_DAYS[number];
