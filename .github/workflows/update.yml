@@ -15,14 +15,14 @@ jobs:
           node-version: "14.x"
       - uses: technote-space/create-pr-action@v2
         with:
-         EXECUTE_COMMANDS: |
-           npm ci
-           npm run update
-           npm install
-           npm audit fix
-           npm test
-         COMMIT_MESSAGE: 'chore(deps): update npm dependencies'
-         COMMIT_NAME: 'GitHub Actions'
-         COMMIT_EMAIL: 'no-reply@github.com'
-         PR_BRANCH_NAME: 'chore-npm-update'
-         PR_TITLE: 'chore(deps): update npm dependencies'
+          EXECUTE_COMMANDS: |
+            npm ci
+            npm run update
+            npm install
+            npm audit fix
+            npm test
+          COMMIT_MESSAGE: 'chore(deps): update npm dependencies'
+          COMMIT_NAME: 'GitHub Actions'
+          COMMIT_EMAIL: 'no-reply@github.com'
+          PR_BRANCH_NAME: 'chore-npm-update'
+          PR_TITLE: 'chore(deps): update npm dependencies'
