@@ -60,10 +60,11 @@ export async function getLatestNovenaMetadata(): Promise<Novena> {
           novena.day =
             <Novena["day"]>Number(novena.title?.match(/Day (\d)/)?.[1]) ||
             undefined;
-          novena.title =
-            novena.title.match(
-              /^(Final Prayer|Day \d)\s.\s(.*)\s\d{4}$/
-            )?.[2] || novena.title;
+          const matches = novena.title.match(
+            /^(Final Prayer|Day \d)\s.\s(.*)\s\d{4}$/
+          );
+          novena.isFinalDay = matches?.[1] === "Final Prayer" || false;
+          novena.title = matches?.[2] || novena.title;
         }
       } else if (tagname === "div" && isDateSection) {
         const matches =
