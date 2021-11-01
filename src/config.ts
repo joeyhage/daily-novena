@@ -64,12 +64,13 @@ export class ExtensionConfig {
   }
 
   static convertFromCommunity(
-    novena: Pick<Novena, "title" | "day" | "novenaLink" | "postDate">
+    novena: Pick<Novena, "title" | "day" | "novenaLink" | "podcastLink" | "postDate">
   ): ExtensionConfigProps {
     return {
       prayCommunityNovena: true,
       novenaName: novena.title,
       novenaLink: novena.novenaLink,
+      podcastLink: novena.podcastLink,
       novenaDay: novena.day,
       lastChecked: toStartOfDay(new Date()),
       lastPrayed: undefined,
