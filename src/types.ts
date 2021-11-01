@@ -31,6 +31,7 @@ export interface ExtensionConfigProps {
   prayCommunityNovena: boolean;
   novenaName?: Novena["title"];
   novenaLink?: Novena["novenaLink"];
+  podcastLink?: Novena["podcastLink"];
   novenaDay?: Novena["day"];
   lastChecked?: Date;
   lastPrayed?: Date;
