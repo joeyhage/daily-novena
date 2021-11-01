@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.9] - 2021-10-31
+## [0.0.10] - 2021-10-31
 ### Changed
 - Reminder prompt now includes current Novena and day.
 - If praying the community Novena and it is the final day, reminder prompt opens most recent podcast in the browser since final day prayers are not on the praymorenovenas.com website.
+
+## [0.0.9] - 2021-10-31
+### Changed
+- Dependency updates
 
 ## [0.0.8] - 2021-10-26
 ### Added
@@ -56,7 +60,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Not published.
 
-[Unreleased]: https://github.com/joeyhage/daily-novena/compare/v0.0.9...HEAD
+[Unreleased]: https://github.com/joeyhage/daily-novena/compare/v0.0.10...HEAD
+[0.0.10]: https://github.com/joeyhage/daily-novena/compare/v0.0.9...v0.0.10
 [0.0.9]: https://github.com/joeyhage/daily-novena/compare/v0.0.8...v0.0.9
 [0.0.8]: https://github.com/joeyhage/daily-novena/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/joeyhage/daily-novena/compare/v0.0.6...v0.0.7
