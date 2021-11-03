@@ -40,6 +40,7 @@ async function remindOnStartup(
         ? pray(extensionConfig)
         : vscode.env.openExternal(vscode.Uri.parse(config.podcastLink!));
     } else if (chosen === items[2]) {
+      log(LogLevel.info, "Silencing for today");
       extensionConfig.update({ lastPrayed: toStartOfDay(new Date()) });
     }
   }

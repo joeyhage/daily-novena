@@ -72,29 +72,36 @@ export async function getLatestNovenaMetadata(): Promise<Novena> {
             postDate.replace(/\n/g, "")
           );
         const parsedDate = `${matches?.[1]}, ${matches?.[2]} ${matches?.[3]}, ${matches?.[4]}`;
-        log(LogLevel.debug, { parsedDate });
         novena.postDate = matches?.[1] ? new Date(parsedDate) : undefined;
         isDateSection = false;
       }
     },
   });
   return new Promise(async (resolve, reject) => {
-    const res = await fetch("https://p.praymorenovenas.com/category/podcast");
-    log(LogLevel.debug, { getLatestNovenaMetadataStatus: res.status });
-    if (res.status !== 200) {
-      log(LogLevel.error, `getLatestNovenaMetadata: status code ${res.status}`);
-      throw new Error("getLatestNovenaMetadata: Bad status code");
-    } else {
-      res?.body
-        ?.pipe(parserStream)
-        .on("finish", () => {
-          log(
-            LogLevel.debug,
-            `getLatestNovenaMetadata: Found ${novena.title} day ${novena.day}`
-          );
-          resolve(novena);
-        })
-        .on("error", reject);
+    try {
+      const res = await fetch("https://p.praymorenovenas.com/category/podcast");
+      log(LogLevel.info, { getLatestNovenaMetadataStatus: res.status });
+      if (res.status !== 200) {
+        log(
+          LogLevel.error,
+          `getLatestNovenaMetadata: status code ${res.status}`
+        );
+        throw new Error("getLatestNovenaMetadata: Bad status code");
+      } else {
+        res?.body
+          ?.pipe(parserStream)
+          .on("finish", () => {
+            log(
+              LogLevel.debug,
+              `getLatestNovenaMetadata: Found ${novena.title} day ${novena.day}`
+            );
+            resolve(novena);
+          })
+          .on("error", reject);
+      }
+    } catch (e: any) {
+      log(LogLevel.error, `getLatestNovenaMetadata: ${e.message}`);
+      reject(e);
     }
   });
 }
@@ -134,18 +141,23 @@ export async function getNovenaText(
     },
   });
   return new Promise(async (resolve, reject) => {
-    const res = await fetch(config.novenaLink!);
-    log(LogLevel.debug, { getNovenaTextStatus: res.status });
-    if (res.status !== 200) {
-      log(LogLevel.error, `getNovenaText: ${res.status}`);
-      throw new Error("getNovenaText: Bad status code");
-    } else {
-      res?.body
-        ?.pipe(parserStream)
-        .on("finish", () => {
-          resolve(novenaText.replace(/(<p><\/p>|\n)/g, ""));
-        })
-        .on("error", reject);
+    try {
+      const res = await fetch(config.novenaLink!);
+      log(LogLevel.info, { getNovenaTextStatus: res.status });
+      if (res.status !== 200) {
+        log(LogLevel.error, `getNovenaText: ${res.status}`);
+        throw new Error("getNovenaText: Bad status code");
+      } else {
+        res?.body
+          ?.pipe(parserStream)
+          .on("finish", () => {
+            resolve(novenaText.replace(/(<p><\/p>|\n)/g, ""));
+          })
+          .on("error", reject);
+      }
+    } catch (e: any) {
+      log(LogLevel.error, `getNovenaText: ${e.message}`);
+      reject(e);
     }
   });
 }
@@ -197,18 +209,23 @@ export async function getNovenaList(): Promise<QuickPickItem[]> {
     },
   });
   return new Promise(async (resolve, reject) => {
-    const res = await fetch("https://www.praymorenovenas.com/novenas");
-    log(LogLevel.debug, { getNovenaListStatus: res.status });
-    if (res.status !== 200) {
-      log(LogLevel.error, `getNovenaList: status code ${res.status}`);
-      throw new Error("Bad status code");
-    } else {
-      res?.body
-        ?.pipe(parserStream)
-        .on("finish", () => {
-          resolve(novenas);
-        })
-        .on("error", reject);
+    try {
+      const res = await fetch("https://www.praymorenovenas.com/novenas");
+      log(LogLevel.info, { getNovenaListStatus: res.status });
+      if (res.status !== 200) {
+        log(LogLevel.error, `getNovenaList: status code ${res.status}`);
+        throw new Error("Bad status code");
+      } else {
+        res?.body
+          ?.pipe(parserStream)
+          .on("finish", () => {
+            resolve(novenas);
+          })
+          .on("error", reject);
+      }
+    } catch (e: any) {
+      log(LogLevel.error, `getNovenaList: ${e.message}`);
+      reject(e);
     }
   });
 }
