@@ -1,10 +1,14 @@
 # daily-novena README
 
 <p align="center">
-  <a href="https://github.com/joeyhage/daily-novena/actions?query=workflow%3Aci">
-    <img alt="Build Status" src="https://github.com/joeyhage/daily-novena/workflows/ci/badge.svg?branch=main"></a>
-  <a href="https://github.com/joeyhage/daily-novena/actions?query=workflow%3A%22daily+health+check%22">
-    <img alt="Daily Health Check" src="https://github.com/joeyhage/daily-novena/workflows/daily%20health%20check/badge.svg?branch=main"></a>
+  <a href="https://github.com/joeyhage/daily-novena/blob/main/LICENSE">
+    <img alt="License" src="https://img.shields.io/github/license/joeyhage/daily-novena?cacheSeconds=3600&logo=github"></a>
+  <a href="https://github.com/joeyhage/daily-novena/actions?query=workflow%3Aci+branch%3Amain">
+    <img alt="Build Status" src="https://img.shields.io/github/workflow/status/joeyhage/daily-novena/ci/main?cacheSeconds=3600&label=ci&logo=github"></a>
+  <a href="https://github.com/joeyhage/daily-novena/actions?query=workflow%3A%22daily+health+check%22+branch%3Amain">
+    <img alt="Daily Health Check" src="https://img.shields.io/github/workflow/status/joeyhage/daily-novena/daily%20health%20check/main?cacheSeconds=3600&label=daily%20health%20check&logo=github"></a>
+</p>
+<p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=joeyhage.daily-novena">
     <img alt="Build Status" src="https://img.shields.io/visual-studio-marketplace/v/joeyhage.daily-novena?cacheSeconds=3600&logo=visualstudiocode"></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=joeyhage.daily-novena">

@@ -75,7 +75,11 @@ export const pray = async (extensionConfig: ExtensionConfig) => {
 
 const prayCommand = (extensionConfig: ExtensionConfig) => {
   return vscode.commands.registerCommand(`${COMMAND_PREFIX}.pray`, async () => {
-    await pray(extensionConfig);
+    try {
+      await pray(extensionConfig);
+    } catch (e: any) {
+      log(LogLevel.error, { message: `Error in prayCommand: ${e.message}` });
+    }
   });
 };
 
@@ -99,8 +103,10 @@ const chooseNovenaCommand = (extensionConfig: ExtensionConfig) => {
             ExtensionConfig.convertFromChosen(chosen)
           );
         }
-      } catch (e) {
-        log(LogLevel.error, { message: "Error in chooseNovenaCommand", e });
+      } catch (e: any) {
+        log(LogLevel.error, {
+          message: `Error in chooseNovenaCommand: ${e.message}`,
+        });
       }
     }
   );
