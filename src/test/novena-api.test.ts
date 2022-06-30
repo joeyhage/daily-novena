@@ -46,12 +46,12 @@ it("should obtain Novena metadata for most recent Novena", async () => {
   );
 });
 
-it("should build approximately 250 Novenas for `QuickPick` when Novena list is retrieved", async () => {
+it("should build approximately 300 Novenas for `QuickPick` when Novena list is retrieved", async () => {
   // WHEN
   const novenaList = await getNovenaList();
 
   // THEN
-  expect(novenaList).to.have.length.within(250, 300);
+  expect(novenaList).to.have.length.within(300, 350);
   novenaList.forEach((novena) => {
     expect(novena.label).to.match(
       /^[a-zA-Záí.,'"’&| -]+$/,
