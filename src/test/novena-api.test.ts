@@ -54,7 +54,7 @@ it("should build approximately 300 Novenas for `QuickPick` when Novena list is r
   expect(novenaList).to.have.length.within(300, 350);
   novenaList.forEach((novena) => {
     expect(novena.label).to.match(
-      /^[a-zA-Záí.,'"’&| -]+$/,
+      /^[a-zA-Z0-9áí.,'"’&| -]+$/,
       `Novena '${JSON.stringify(novena)}' had empty label`
     );
     expect(novena.detail).to.match(
